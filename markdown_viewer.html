@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Viewer (VS Code Style)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css">
+  <style>
+    body {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #252526;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      padding: 2rem;
+    }
+    .markdown-body {
+      background: transparent;
+      color: #d4d4d4;
+    }
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .tab {
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 4px 4px 0 0;
+      background: #2d2d2d;
+      color: #d4d4d4;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+    .tab.active {
+      background: #1e1e1e;
+      font-weight: bold;
+      border-bottom: 2px solid #007acc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <button class="tab active" data-file="DevOps_Complete_Guide.md">DevOps_Complete_Guide.md</button>
+      <button class="tab" data-file="Unit2_Git_and_Gitflow_Complete.md">Unit2_Git_and_Gitflow_Complete.md</button>
+      <button class="tab" data-file="Unit3_CI_CD_Complete.md">Unit3_CI_CD_Complete.md</button>
+    </div>
+    <article id="markdown-content" class="markdown-body"></article>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const content = document.getElementById('markdown-content');
+    async function loadMarkdown(file) {
+      try {
+        const res = await fetch(file);
+        if (!res.ok) throw new Error('File not found');
+        const md = await res.text();
+        content.innerHTML = marked.parse(md);
+      } catch (e) {
+        content.innerHTML = `<p style='color:red;'>Error loading <b>${file}</b>: ${e.message}</p>`;
+      }
+    }
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        loadMarkdown(tab.dataset.file);
+      });
+    });
+    // Load the first file by default
+    loadMarkdown('DevOps_Complete_Guide.md');
+  </script>
+</body>
+</html>
