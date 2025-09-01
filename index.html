@@ -111,6 +111,47 @@
     .markdown-body em {
       color: #6f42c1;
     }
+    @media (max-width: 1000px) {
+      .container {
+        max-width: 98vw;
+        margin: 1rem 1vw;
+        padding: 1rem;
+      }
+    }
+    @media (max-width: 700px) {
+      .container {
+        padding: 0.5rem;
+      }
+      .tabs {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        font-size: 0.95rem;
+      }
+      .tab {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.7rem;
+      }
+      .markdown-body {
+        font-size: 0.98em;
+      }
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 0.2rem;
+      }
+      .tabs {
+        gap: 0.2rem;
+        font-size: 0.9rem;
+      }
+      .tab {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.5rem;
+      }
+      .markdown-body {
+        font-size: 0.95em;
+        padding: 0.2em;
+      }
+    }
   </style>
 </head>
 <body>
